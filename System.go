@@ -7,7 +7,7 @@
 package common
 
 import (
-	"github.com/kavanahuang/log"
+	"log"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -37,7 +37,7 @@ func SetCurrentPath() string {
 	current := os.Args[0]
 	path, err := exec.LookPath(current)
 	if err != nil {
-		log.Logs.Error("Set the current path error: ", err)
+		log.Println("Set the current path error: ", err)
 	}
 
 	return path
@@ -47,7 +47,7 @@ func SetCurrentPath() string {
 func GetAbsPath(current string) string {
 	absPath, err := filepath.Abs(current)
 	if err != nil {
-		log.Logs.Error("Get the current absolute of path error: ", err)
+		log.Println("Get the current absolute of path error: ", err)
 	}
 
 	return absPath
@@ -88,7 +88,7 @@ func CallBrowser(uri string) error {
 	getOS := GetOS()
 	run, ok := browser[getOS]
 	if !ok {
-		log.Logs.Error("Unknown the OS:", getOS)
+		log.Println("Unknown the OS:", getOS)
 	}
 
 	cmd := exec.Command(run, uri)

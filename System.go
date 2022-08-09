@@ -99,3 +99,15 @@ func CallBrowser(uri string) error {
 func GetOS() string {
 	return runtime.GOOS
 }
+
+// Get config dir of custom
+func GetCustomConfigDir(dirname string) string {
+	rootPath := GetRootPath()
+	return filepath.Join(rootPath, dirname, string(os.PathSeparator))
+}
+
+// Get config path
+func GetCustomConfigPath(dirname string, filename string) string {
+	configDir := GetCustomConfigDir(dirname)
+	return filepath.Join(configDir, filename)
+}

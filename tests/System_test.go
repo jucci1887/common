@@ -135,7 +135,17 @@ func TestGetOS(t *testing.T) {
 	msg := "linux"
 	result := common.GetOS()
 
-	Test.T(t).Debug(result)
+	if result != msg {
+		Test.T(t).Logs(msg).No(result)
+	} else {
+		Test.T(t).Logs(msg).Ok(result)
+	}
+}
+
+func TestGetCustomConfigPath(t *testing.T) {
+	msg := "/home/kernel/project/go/common/config/config.toml"
+	result := common.GetCustomConfigPath("config", "config.toml")
+
 	if result != msg {
 		Test.T(t).Logs(msg).No(result)
 	} else {

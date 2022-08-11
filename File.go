@@ -266,7 +266,6 @@ func (file *FileServices) Write(perm ...os.FileMode) *os.File {
 		log.Logs.Error("Open file error: ", err)
 	}
 
-	defer func() { _ = open.Close() }()
 	return open
 }
 

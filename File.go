@@ -8,10 +8,24 @@ package common
 
 import (
 	"bufio"
+	"errors"
+	"fmt"
 	"github.com/kavanahuang/log"
 	"io/ioutil"
 	"os"
+	"path/filepath"
+	"strings"
+	"time"
 )
+
+const MAX_ULIMIT = 65535
+
+type fileNode struct {
+	Name     string
+	Size     int64
+	Modified time.Time
+	Children []*fileNode
+}
 
 type FileServices struct {
 	name    string
@@ -370,4 +384,59 @@ func (file *FileServices) CreateDir(path string, perm ...os.FileMode) bool {
 	}
 
 	return true
+}
+
+/**
+ * 获取文件树列表
+ */
+func (file *FileServices) ShowFileTree() *fileNode {
+	node := &fileNode{}
+	if info, err := os.Stat(file.path); err == nil {
+		if err := file.RecursionIterateDir(file.path, info, node, new(uint)); err != nil {
+			log.Logs.Error("Get File list error: ", err)
+		}
+	}
+
+	return node
+}
+
+/**
+ * 递归遍历目录
+ */
+func (file *FileServices) RecursionIterateDir(path string, info os.FileInfo, node *fileNode, number *uint) error {
+	if (!info.IsDir() && !info.Mode().IsRegular()) || strings.HasPrefix(info.Name(), ".") {
+		return errors.New("ERROR: Non-regular file")
+	}
+
+	*number++
+	// 限制遍历的文件数量
+	if (*number) > MAX_ULIMIT {
+		return errors.New("ERROR: Over file limit")
+	}
+
+	node.Name = info.Name()
+	node.Size = info.Size()
+	node.Modified = info.ModTime()
+	if !info.IsDir() {
+		return nil
+	}
+
+	children, err := ioutil.ReadDir(path)
+	if err != nil {
+		return fmt.Errorf("ERROR: Failed to list files: %w", err)
+	}
+
+	node.Size = 0
+	for _, i := range children {
+		c := &fileNode{}
+		p := filepath.Join(path, i.Name())
+		if err := file.RecursionIterateDir(p, i, c, number); err != nil {
+			continue
+		}
+
+		node.Size += c.Size
+		node.Children = append(node.Children, c)
+	}
+
+	return nil
 }

@@ -74,6 +74,18 @@ func TestGetFileSize(t *testing.T) {
 	}
 }
 
+func TestIsExists(t *testing.T) {
+	msg := "Is Exists: File_test.go"
+	filePath := "File_test.go"
+	result := common.Files.IsExists(filePath)
+	Test.T(t).Debug(result)
+	if result == nil {
+		Test.T(t).Logs(msg).Ok(result)
+	} else {
+		Test.T(t).Logs(msg).No(result)
+	}
+}
+
 func TestFromString(t *testing.T) {
 	assert := "go"
 	msg := "FromString: "

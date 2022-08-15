@@ -295,6 +295,17 @@ func (file *FileServices) Create(filename string) *os.File {
 }
 
 /**
+ * 检查文件或目录是否存在,并返回错误
+ */
+func (file *FileServices) IsExists(path string) error {
+	_, err := os.Stat(path)
+	if os.IsNotExist(err) {
+		return err
+	}
+	return nil
+}
+
+/**
  * 检查文件或目录是否存在
  */
 func (file *FileServices) PathExists(path string) bool {

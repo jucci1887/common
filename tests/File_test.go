@@ -78,7 +78,6 @@ func TestIsExists(t *testing.T) {
 	msg := "Is Exists: File_test.go"
 	filePath := "File_test.go"
 	result := common.Files.IsExists(filePath)
-	Test.T(t).Debug(result)
 	if result == nil {
 		Test.T(t).Logs(msg).Ok(result)
 	} else {

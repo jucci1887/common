@@ -10,7 +10,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"github.com/kavanahuang/log"
+	"github.com/kavanahuang/logs"
 	"io/ioutil"
 	"os"
 	"path/filepath"
@@ -45,7 +45,7 @@ func init() {
 func (file *FileServices) FileInfo(filename string) os.FileInfo {
 	fileInfo, err := os.Stat(filename)
 	if err != nil {
-		log.Logs.Error("Get file info error: ", err)
+		logs.Error("Get file info error: ", err)
 	}
 
 	return fileInfo
@@ -76,7 +76,7 @@ func (file *FileServices) PutFile(filename string) *FileServices {
 func (file *FileServices) GetFile(filename string) []byte {
 	buf, err := ioutil.ReadFile(filename)
 	if err != nil {
-		log.Logs.Error("Get file: "+filename+" error: ", err)
+		logs.Error("Get file: "+filename+" error: ", err)
 	}
 
 	return buf
@@ -97,7 +97,7 @@ func (file *FileServices) FromString(str string) bool {
 func (file *FileServices) FromByte(content []byte) bool {
 	err := ioutil.WriteFile(file.name, content, file.Perm)
 	if err != nil {
-		log.Logs.Error("Write file: "+file.name+" error: ", err)
+		logs.Error("Write file: "+file.name+" error: ", err)
 		return false
 	}
 
@@ -110,7 +110,7 @@ func (file *FileServices) FromByte(content []byte) bool {
 func (file *FileServices) IoPut(filename string, content []byte) bool {
 	err := ioutil.WriteFile(filename, content, file.Perm)
 	if err != nil {
-		log.Logs.Error("Io put file: "+filename+" error: ", err)
+		logs.Error("Io put file: "+filename+" error: ", err)
 		return false
 	}
 
@@ -126,13 +126,13 @@ func (file *FileServices) BufIoPut(filename string, content string) bool {
 
 	_, err := putFile.WriteString(content)
 	if err != nil {
-		log.Logs.Error("Write data error: ", err)
+		logs.Error("Write data error: ", err)
 		return false
 	}
 
 	err = putFile.Flush()
 	if err != nil {
-		log.Logs.Error("Push data error: ", err)
+		logs.Error("Push data error: ", err)
 		return false
 	}
 
@@ -151,7 +151,7 @@ func (file *FileServices) BufIoPut(filename string, content string) bool {
 func (file *FileServices) AppendWrite(filename string) *os.File {
 	open, err := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_RDWR, file.Perm)
 	if err != nil {
-		log.Logs.Error("Open file error: ", err)
+		logs.Error("Open file error: ", err)
 	}
 
 	return open
@@ -163,7 +163,7 @@ func (file *FileServices) AppendWrite(filename string) *os.File {
 func (file *FileServices) AddWrite(filename string) *FileServices {
 	open, err := os.OpenFile(filename, os.O_CREATE|os.O_APPEND|os.O_RDWR, file.Perm)
 	if err != nil {
-		log.Logs.Error("Open file error: ", err)
+		logs.Error("Open file error: ", err)
 	}
 
 	file.osFile = open
@@ -176,7 +176,7 @@ func (file *FileServices) AddWrite(filename string) *FileServices {
  */
 func (file *FileServices) AddString(content string) bool {
 	if file.osFile == nil {
-		log.Logs.Error("Add write error: the file.osFile value is nil")
+		logs.Error("Add write error: the file.osFile value is nil")
 	}
 
 	defer func() { _ = file.osFile.Close() }()
@@ -185,14 +185,14 @@ func (file *FileServices) AddString(content string) bool {
 	write := bufio.NewWriter(file.osFile)
 	_, err := write.WriteString(content)
 	if err != nil {
-		log.Logs.Error("Add string content error: ", err)
+		logs.Error("Add string content error: ", err)
 		return false
 	}
 
 	// 将缓存中的内容写入磁盘
 	err = write.Flush()
 	if err != nil {
-		log.Logs.Error("Flush add string content error: ", err)
+		logs.Error("Flush add string content error: ", err)
 		return false
 	}
 
@@ -209,21 +209,21 @@ func (file *FileServices) AddString(content string) bool {
  */
 func (file *FileServices) MultiAddString(content string) bool {
 	if file.osFile == nil {
-		log.Logs.Error("Add write error: the file.osFile value is nil")
+		logs.Error("Add write error: the file.osFile value is nil")
 	}
 
 	// 使用缓存写入
 	write := bufio.NewWriter(file.osFile)
 	_, err := write.WriteString(content)
 	if err != nil {
-		log.Logs.Error("Add string content error: ", err)
+		logs.Error("Add string content error: ", err)
 		return false
 	}
 
 	// 将缓存中的内容写入磁盘
 	err = write.Flush()
 	if err != nil {
-		log.Logs.Error("Flush add string content error: ", err)
+		logs.Error("Flush add string content error: ", err)
 		return false
 	}
 
@@ -239,7 +239,7 @@ func (file *FileServices) MultiAddString(content string) bool {
  */
 func (file *FileServices) CloseFile() bool {
 	if file.osFile == nil {
-		log.Logs.Error("Close file error: the file.osFile is nil")
+		logs.Error("Close file error: the file.osFile is nil")
 	}
 
 	defer func() { _ = file.osFile.Close() }()
@@ -258,7 +258,7 @@ func (file *FileServices) CloseFile() bool {
 func (file *FileServices) Overwrite(filename string) *os.File {
 	open, err := os.OpenFile(filename, os.O_CREATE|os.O_TRUNC|os.O_WRONLY, file.Perm)
 	if err != nil {
-		log.Logs.Error("Open file error: ", err)
+		logs.Error("Open file error: ", err)
 	}
 
 	return open
@@ -277,7 +277,7 @@ func (file *FileServices) Write(perm ...os.FileMode) *os.File {
 
 	open, err := os.OpenFile(file.name, os.O_CREATE|os.O_EXCL|os.O_WRONLY, file.Perm)
 	if err != nil {
-		log.Logs.Error("Open file error: ", err)
+		logs.Error("Open file error: ", err)
 	}
 
 	return open
@@ -289,7 +289,7 @@ func (file *FileServices) Write(perm ...os.FileMode) *os.File {
 func (file *FileServices) Create(filename string) *os.File {
 	open, err := os.Create(filename)
 	if err != nil {
-		log.Logs.Error("Created file: "+filename+" error: ", err)
+		logs.Error("Created file: "+filename+" error: ", err)
 	}
 	return open
 }
@@ -315,7 +315,7 @@ func (file *FileServices) PathExists(path string) bool {
 	}
 	if os.IsNotExist(err) {
 		if err != nil {
-			log.Logs.Error(path+" not found: ", err)
+			logs.Error(path+" not found: ", err)
 		}
 	}
 	return false
@@ -339,7 +339,7 @@ func (file *FileServices) NewFolder(perm ...os.FileMode) bool {
 
 	err := os.Mkdir(file.path, file.DirPerm)
 	if err != nil {
-		log.Logs.Error("Created dir: "+file.path+" error: ", err)
+		logs.Error("Created dir: "+file.path+" error: ", err)
 		return false
 	}
 
@@ -356,7 +356,7 @@ func (file *FileServices) NewNonFolder(perm ...os.FileMode) bool {
 
 	err := os.MkdirAll(file.path, file.DirPerm)
 	if err != nil {
-		log.Logs.Error("Created dir: "+file.path+" error: ", err)
+		logs.Error("Created dir: "+file.path+" error: ", err)
 		return false
 	}
 
@@ -373,7 +373,7 @@ func (file *FileServices) NewDir(path string, perm ...os.FileMode) bool {
 
 	err := os.Mkdir(path, file.DirPerm)
 	if err != nil {
-		log.Logs.Error("New dir: "+path+" error: ", err)
+		logs.Error("New dir: "+path+" error: ", err)
 		return false
 	}
 
@@ -390,7 +390,7 @@ func (file *FileServices) CreateDir(path string, perm ...os.FileMode) bool {
 
 	err := os.MkdirAll(path, file.DirPerm)
 	if err != nil {
-		log.Logs.Error("Created dir: "+path+" error: ", err)
+		logs.Error("Created dir: "+path+" error: ", err)
 		return false
 	}
 
@@ -404,7 +404,7 @@ func (file *FileServices) ShowFileTree() *fileNode {
 	node := &fileNode{}
 	if info, err := os.Stat(file.path); err == nil {
 		if err := file.RecursionIterateDir(file.path, info, node, new(uint)); err != nil {
-			log.Logs.Error("Get File list error: ", err)
+			logs.Error("Get File list error: ", err)
 		}
 	}
 

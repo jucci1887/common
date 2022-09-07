@@ -10,7 +10,7 @@ package common
 import (
 	"encoding/base64"
 	"encoding/json"
-	"github.com/kavanahuang/log"
+	"github.com/kavanahuang/logs"
 	"strconv"
 	"strings"
 )
@@ -44,13 +44,13 @@ func (format *FormatServices) ToByte() []byte {
 	case map[string]interface{}:
 		toByte, err := json.Marshal(value)
 		if err != nil {
-			log.Logs.Error("Map interface to byte error: ", err)
+			logs.Error("Map interface to byte error: ", err)
 		}
 		return toByte
 	case interface{}:
 		toByte, err := json.Marshal(value)
 		if err != nil {
-			log.Logs.Error("Interface to byte error: ", err)
+			logs.Error("Interface to byte error: ", err)
 		}
 		return toByte
 	}
@@ -76,13 +76,13 @@ func (format *FormatServices) ToBool() bool {
 	case string:
 		toBool, err := strconv.ParseBool(value)
 		if err != nil {
-			log.Logs.Error("String to bool error: ", err)
+			logs.Error("String to bool error: ", err)
 		}
 		return toBool
 	case int:
 		toBool, err := strconv.ParseBool(strconv.Itoa(value))
 		if err != nil {
-			log.Logs.Error("Int to bool error: ", err)
+			logs.Error("Int to bool error: ", err)
 		}
 		return toBool
 	}
@@ -108,7 +108,7 @@ func (format *FormatServices) ToString() string {
 	case map[string]interface{}:
 		toByte, err := json.Marshal(value)
 		if err != nil {
-			log.Logs.Error("Map interface to string error: ", err)
+			logs.Error("Map interface to string error: ", err)
 		}
 		return string(toByte)
 	}
@@ -124,13 +124,13 @@ func (format *FormatServices) ToInt() int {
 	case string:
 		str, err := strconv.Atoi(value)
 		if err != nil {
-			log.Logs.Error("String to int error: ", err)
+			logs.Error("String to int error: ", err)
 		}
 		return str
 	case []byte:
 		bytes, err := strconv.Atoi(string(value))
 		if err != nil {
-			log.Logs.Error("[]byte to int error: ", err)
+			logs.Error("[]byte to int error: ", err)
 		}
 		return bytes
 	}
@@ -146,7 +146,7 @@ func (format *FormatServices) ToUint() uint {
 	case []byte:
 		bytes, err := strconv.Atoi(string(value))
 		if err != nil {
-			log.Logs.Error("[]byte to uint error: ", err)
+			logs.Error("[]byte to uint error: ", err)
 		}
 		return uint(bytes)
 	case int:
@@ -154,7 +154,7 @@ func (format *FormatServices) ToUint() uint {
 	case string:
 		str, err := strconv.Atoi(value)
 		if err != nil {
-			log.Logs.Error("String to uint error: ", err)
+			logs.Error("String to uint error: ", err)
 		}
 		return uint(str)
 	}
@@ -170,13 +170,13 @@ func (format *FormatServices) ToInt64() int64 {
 	case string:
 		str, err := strconv.ParseInt(value, 10, 64)
 		if err != nil {
-			log.Logs.Error("String to int64 error: ", err)
+			logs.Error("String to int64 error: ", err)
 		}
 		return str
 	case []byte:
 		bytes, err := strconv.ParseInt(string(value), 10, 64)
 		if err != nil {
-			log.Logs.Error("[]byte to int64 error: ", err)
+			logs.Error("[]byte to int64 error: ", err)
 		}
 		return bytes
 	}
@@ -206,7 +206,7 @@ func (format *FormatServices) ToArrayArrayInt() [][]int {
 		}
 		return convert
 	default:
-		log.Logs.Error("%s%T", "Unknown type: ", final)
+		logs.Error("%s%T", "Unknown type: ", final)
 	}
 	return nil
 }
@@ -221,7 +221,7 @@ func (format *FormatServices) ToArrayInt() []int {
 		}
 		return convert
 	default:
-		log.Logs.Error("%s%T", "Unknown type: ", final)
+		logs.Error("%s%T", "Unknown type: ", final)
 	}
 	return nil
 }
@@ -406,7 +406,7 @@ func (format *FormatServices) ToMapStringString() map[string]string {
 		return convert
 
 	default:
-		log.Logs.Error("%s%T", "Unknown type: ", value)
+		logs.Error("%s%T", "Unknown type: ", value)
 	}
 
 	return nil
@@ -448,13 +448,13 @@ func (format *FormatServices) FromBase64(from interface{}) *FormatServices {
 	case string:
 		decodeBase64, err := base64.StdEncoding.DecodeString(value)
 		if err != nil {
-			log.Logs.Error("Decode the base64 string failed: ", err)
+			logs.Error("Decode the base64 string failed: ", err)
 		}
 		format.To = decodeBase64
 	case []byte:
 		decodeBase64, err := base64.StdEncoding.DecodeString(string(value))
 		if err != nil {
-			log.Logs.Error("Decode the base64 string failed: ", err)
+			logs.Error("Decode the base64 string failed: ", err)
 		}
 		format.To = decodeBase64
 	}

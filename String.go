@@ -103,3 +103,14 @@ func (s *StrUtil) Reverse(str string) string {
 	reverse := Array.ReverseRune(toRune)
 	return string(reverse)
 }
+
+// 判断多个字符串是否为空
+func (s *StrUtil) IsNull(str ...string) bool {
+	for _, s := range str {
+		if s != "" {
+			return false
+		}
+	}
+
+	return true
+}

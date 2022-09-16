@@ -114,3 +114,9 @@ func (s *StrUtil) IsNull(str ...string) bool {
 
 	return true
 }
+
+// 剔除字符串中指定字符
+func (s *StrUtil) Cull(str, need string) string {
+	source := strings.Split(str, need)
+	return strings.Join(source, "")
+}

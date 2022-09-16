@@ -50,3 +50,8 @@ func (t *times) ToDateTime() time.Time {
 func (t *times) GetTodayDate() string {
 	return t.dateTime.Format(DateFormat)
 }
+
+// 通过格式化获取当天日期字符串
+func (t *times) GetTodayDateString(str string) string {
+	return t.dateTime.Format(str)
+}

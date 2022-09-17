@@ -3,9 +3,10 @@ package common
 import "time"
 
 type times struct {
-	standard  string
-	timestamp int64
-	dateTime  time.Time
+	standard     string
+	timestamp    int64
+	dateTime     time.Time
+	durationTime time.Duration
 }
 
 const DateFormat = "2006-01-02"
@@ -54,4 +55,10 @@ func (t *times) GetTodayDate() string {
 // 通过格式化获取当天日期字符串
 func (t *times) GetTodayDateString(str string) string {
 	return t.dateTime.Format(str)
+}
+
+func (t *times) IntToSecond(second int) time.Duration {
+	timeSecond := time.Duration(second)
+	t.durationTime = timeSecond * time.Second
+	return t.durationTime
 }

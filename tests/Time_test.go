@@ -69,6 +69,18 @@ func TestGetTodayDateString(t *testing.T) {
 	}
 }
 
+func TestGetDateString(t *testing.T) {
+	dateFormat := "20060102"
+	msg := time.Now().AddDate(0, 0, +1).Format(dateFormat)
+	result := common.Time.Tomorrow().GetDateString(dateFormat)
+
+	if result == msg {
+		Test.T(t).Logs(msg).Ok(result)
+	} else {
+		Test.T(t).Logs(msg).No(result)
+	}
+}
+
 func TestTimeEnd(t *testing.T) {
 	Test.End("Time")
 }

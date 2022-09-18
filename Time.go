@@ -35,6 +35,11 @@ func (t *times) Now() *times {
 	return t
 }
 
+func (t *times) Tomorrow() *times {
+	t.dateTime = time.Now().AddDate(0, 0, +1)
+	return t
+}
+
 func (t *times) ToTimestamp() int64 {
 	return t.timestamp
 }
@@ -54,6 +59,11 @@ func (t *times) GetTodayDate() string {
 
 // 通过格式化获取当天日期字符串
 func (t *times) GetTodayDateString(str string) string {
+	return t.dateTime.Format(str)
+}
+
+// 通过格式化获取当天日期字符串
+func (t *times) GetDateString(str string) string {
 	return t.dateTime.Format(str)
 }
 

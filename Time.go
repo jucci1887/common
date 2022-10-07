@@ -11,6 +11,7 @@ type times struct {
 
 const DateFormat = "2006-01-02"
 const TimeFormat = "2006-01-02 15:04:05"
+const MsTimeFormat = "2006-01-02 15:04:05.999"
 
 var Time = new(times)
 
@@ -55,6 +56,16 @@ func (t *times) ToDateTime() time.Time {
 // 获取当天日期字符串
 func (t *times) GetTodayDate() string {
 	return t.dateTime.Format(DateFormat)
+}
+
+// 获取当天日期字符串: 毫秒级时间
+func (t *times) GetTodayMsTime() string {
+	return t.dateTime.Format(MsTimeFormat)
+}
+
+// 获取毫米级时间字符串
+func (t *times) GetMsTime(d time.Time) string {
+	return d.Format(MsTimeFormat)
 }
 
 // 通过格式化获取当天日期字符串

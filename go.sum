@@ -1,7 +1,7 @@
 github.com/iris-contrib/go.uuid v2.0.0+incompatible h1:XZubAYg61/JwnJNbZilGjf3b3pB80+OQg2qf6c8BfWE=
 github.com/iris-contrib/go.uuid v2.0.0+incompatible/go.mod h1:iz2lgM/1UnEf1kP0L/+fafWORmlnuysV2EMP8MW+qe0=
-github.com/jucci1887/logs v0.0.0-20230604171253-eceb7a7bf3f5 h1:btTTtw8WgYvedKu5nH3HjA8isrpXMgW3W5p88Ea4KSU=
-github.com/jucci1887/logs v0.0.0-20230604171253-eceb7a7bf3f5/go.mod h1:NBOmL8XbYKjp4DD6zIVODrwbbMAqq5OinSSBJkboAQs=
+github.com/jucci1887/logs v0.0.0-20230604183159-f8b6863903b4 h1:lqtZoll1K63O0C7v8V0a90OQlg5iXRBFdbVZx7HGuH8=
+github.com/jucci1887/logs v0.0.0-20230604183159-f8b6863903b4/go.mod h1:NBOmL8XbYKjp4DD6zIVODrwbbMAqq5OinSSBJkboAQs=
 github.com/kr/pretty v0.2.1 h1:Fmg33tUaq4/8ym9TJN1x7sLJnHVwhP33CNkpYV/7rwI=
 github.com/kr/pretty v0.2.1/go.mod h1:ipq/a2n7PKx3OHsz4KJII5eveXtPO4qwEXGdVfWzfnI=
 github.com/kr/pty v1.1.1/go.mod h1:pFQYn66WHrOpPYNljwOMqo10TkYh1fy3cYio2l3bCsQ=

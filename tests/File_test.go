@@ -10,7 +10,7 @@ package tests
 
 import (
 	"bufio"
-	"github.com/kavanahuang/common"
+	"github.com/jucci1887/common"
 	"os"
 	"testing"
 )

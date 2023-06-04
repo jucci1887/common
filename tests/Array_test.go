@@ -10,7 +10,7 @@ package tests
 
 import (
 	"fmt"
-	"github.com/kavanahuang/common"
+	"github.com/jucci1887/common"
 	"testing"
 )
 

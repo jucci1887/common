@@ -10,7 +10,7 @@ package tests
 
 import (
 	uuid "github.com/iris-contrib/go.uuid"
-	"github.com/kavanahuang/common"
+	"github.com/jucci1887/common"
 	"testing"
 )
 

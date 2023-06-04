@@ -10,7 +10,7 @@ import (
 	"bufio"
 	"errors"
 	"fmt"
-	"github.com/kavanahuang/logs"
+	"github.com/jucci1887/logs"
 	"io/ioutil"
 	"os"
 	"path/filepath"

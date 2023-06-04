@@ -9,7 +9,7 @@
 package tests
 
 import (
-	"github.com/kavanahuang/common"
+	"github.com/jucci1887/common"
 	"strconv"
 	"testing"
 )

@@ -10,7 +10,7 @@ package common
 import (
 	"encoding/base64"
 	"encoding/json"
-	"github.com/kavanahuang/logs"
+	"github.com/jucci1887/logs"
 	"strconv"
 	"strings"
 )
